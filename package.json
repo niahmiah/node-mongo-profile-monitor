@@ -1,0 +1,28 @@
+{
+  "name": "mongo-profile-mon",
+  "version": "0.0.1",
+  "description": "A mongodb profile monitor",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niahmiah/node-mongo-profile-monitor.git"
+  },
+  "keywords": [
+    "node",
+    "mongodb",
+    "profiler",
+    "database"
+  ],
+  "author": "Ian Patton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/niahmiah/node-mongo-profile-monitor/issues"
+  },
+  "homepage": "https://github.com/niahmiah/node-mongo-profile-monitor",
+  "dependencies": {
+    "mongodb": "^1.4.12"
+  }
+}
