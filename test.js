@@ -1,5 +1,5 @@
 var Profilemon = require('./index');
-var profilemon = new Profilemon({interval: 2000, url: 'mongodb://localhost:27017/test'});
+var profilemon = new Profilemon({url: 'mongodb://localhost:27017/test'});
 
 profilemon.on('profilemon', function(data){
   console.log('profilemon',JSON.stringify(data));
@@ -7,6 +7,4 @@ profilemon.on('profilemon', function(data){
 
 profilemon.start();
 
-// setTimeout(function(){
-//   profilemon.stop();
-// },5000);
+//then do something really slow in the collection and watch it emit

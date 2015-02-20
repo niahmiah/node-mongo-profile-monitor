@@ -35,6 +35,21 @@ ProfileMon.prototype.disconnect = function(){
   }
 };
 
+ProfileMon.prototype.streamProfile = function(doc){
+  var self = this;
+  var query = ({'ts': {'$gt': doc.ts}});
+  self.cursor = self.connection.collection('system.profile').find(query,{},{
+    'tailable': 1,
+    'sort': {
+        '$natural': 1
+    }
+  });
+  self.cursor.each(function (err, profileDoc) {
+    if(err){ throw err; }
+    self.emit('profilemon', profileDoc);
+  });
+};
+
 ProfileMon.prototype.start = function(callback){
   var self = this;
   self.connect(function(err){
@@ -46,17 +61,15 @@ ProfileMon.prototype.start = function(callback){
         {limit: 1, sort: {'$natural': -1}},
         function(err, doc){
           if(err){ throw err; }
-          var query = (!doc ? {} : {'ts': {'$gt': doc.ts}});
-          self.cursor = self.connection.collection('system.profile').find(query,{},{
-            'tailable': 1,
-            'sort': {
-                '$natural': 1
-            }
-          });
-          self.cursor.each(function (err, profileDoc) {
-            if(err){ throw err; }
-            self.emit('profilemon', profileDoc);
-          });
+          if(!doc){
+            doc = {ts: new Date() };
+            self.connection.collection('system.profile').insert(doc, function(err){
+              if(err){ throw err; }
+              self.streamProfile(doc);
+            });
+          }else{
+            self.streamProfile(doc);
+          }
           if(callback){ callback(); }
         }
       );
