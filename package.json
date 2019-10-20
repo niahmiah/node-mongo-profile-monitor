@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/niahmiah/node-mongo-profile-monitor",
   "dependencies": {
-    "mongodb": "^1.4.12"
+    "mongodb": "^3.1.13"
   }
 }
